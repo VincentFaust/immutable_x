@@ -1,7 +1,7 @@
 from utility import Crypto
 
 
-class Orders(Crypto):
+class Order(Crypto):
     def __init__(self, parameters):
         self.endpoint = "orders"
         self.orders = []
@@ -33,7 +33,7 @@ class Orders(Crypto):
         return self.orders
 
 
-gods_orders = Orders(
+gods_orders = Order(
     parameters=(
         {
             "sell_token_address": "0xacb3c6a43d15b907e8433077b6d38ae40936fe2c",

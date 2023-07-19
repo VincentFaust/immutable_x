@@ -4,7 +4,11 @@ import requests
 class Crypto:
     def __init__(self, params):
         self.params = params
-        self.base_url = "https://api.x.immutable.com/v3/"
+        self.base_url = (
+            "https://api.x.immutable.com/v3/"
+            if self.endpoint == "orders"
+            else "https://api.x.immutable.com/v1/"
+        )
         self.cursor = ""
 
         while True:
