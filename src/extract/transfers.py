@@ -1,25 +1,27 @@
 from utility import Crypto
 
 
-class Mint(Crypto):
+class Transfer(Crypto):
     def __init__(self, parameters):
-        self.endpoint = "mints"
-        self.mints = []
+        self.endpoint = "transfers"
+        self.transfers = []
         super().__init__(parameters)
 
     def json_elements(self, data):
         for element in data["result"]:
             timestamp = element["timestamp"].split("T")[0]
-            status = element["status"]
             user = element["user"]
+            token_type = element["token"]["type"]
             token_id = element["token"]["data"]["token_id"]
             id = element["token"]["data"]["id"]
 
-            minter = {
+            transferer = {
                 "timestamp": timestamp,
-                "status": status,
                 "user": user,
+                "token_type": token_type,
                 "token_id": token_id,
+                "id": id,
             }
-            self.mints.append(minter)
-        return self.mints
+
+            self.transfers.append(transferer)
+        return self.transfers
