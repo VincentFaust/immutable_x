@@ -1,13 +1,14 @@
+from typing import Dict, List
 from utility import Crypto
 
 
 class Order(Crypto):
-    def __init__(self, parameters):
+    def __init__(self, parameters: Dict) -> None:
         self.endpoint = "orders"
         self.orders = []
         super().__init__(parameters)
 
-    def json_elements(self, data):
+    def json_elements(self, data: Dict) -> List[Dict]:
         for element in data["result"]:
             updated_timestamp = element["timestamp"].split("T")[0]
             order_id = element["order_id"]

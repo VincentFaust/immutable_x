@@ -1,13 +1,14 @@
+from typing import Dict, List
 from utility import Crypto
 
 
 class Transfer(Crypto):
-    def __init__(self, parameters):
+    def __init__(self, parameters: Dict) -> None:
         self.endpoint = "transfers"
         self.transfers = []
         super().__init__(parameters)
 
-    def json_elements(self, data):
+    def json_elements(self, data: Dict) -> List[Dict]:
         for element in data["result"]:
             timestamp = element["timestamp"].split("T")[0]
             user = element["user"]

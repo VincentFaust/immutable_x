@@ -1,13 +1,14 @@
+from typing import Dict, List
 from utility import Crypto
 
 
 class Mint(Crypto):
-    def __init__(self, parameters):
+    def __init__(self, parameters: Dict) -> None:
         self.endpoint = "mints"
         self.mints = []
         super().__init__(parameters)
 
-    def json_elements(self, data):
+    def json_elements(self, data: Dict) -> List[Dict]:
         for element in data["result"]:
             timestamp = element["timestamp"].split("T")[0]
             status = element["status"]
