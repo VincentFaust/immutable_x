@@ -1,5 +1,5 @@
 from typing import Dict, List
-from utility import Crypto
+from .utility import Crypto
 
 
 class Order(Crypto):
