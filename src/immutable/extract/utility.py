@@ -14,11 +14,9 @@ class Crypto:
 
         while True:
             data = self.get_main_session()
+            self.json_elements(data)
             if data["remaining"] == 1:
-                self.get_main_session()
-                self.json_elements(data)
                 self.cursor = self.cursor_helper(data)
-
             else:
                 break
 
@@ -30,4 +28,4 @@ class Crypto:
         return session.json()
 
     def cursor_helper(self, data: Dict[str, str]) -> str:
-        return data["cursor"]
+        return data["cursor"] if data["remaining"] == 1 else None

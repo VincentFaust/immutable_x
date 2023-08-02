@@ -32,8 +32,8 @@ def test_orders_endpoint_integration():
                     "timestamp": "2023-08-01T20:30:52.063568Z",
                 }
             ],
-            "remaining": 1,
-            "cursor": "",
+            "remaining": 0,
+            "cursor": None,
         },
         status=200,
     )
