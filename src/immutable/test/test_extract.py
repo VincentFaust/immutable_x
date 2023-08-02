@@ -1,5 +1,6 @@
 import responses
 from immutable.extract.orders import Order
+from immutable.extract.mints import Mint
 
 
 @responses.activate
@@ -54,3 +55,48 @@ def test_orders_endpoint_integration():
     assert "buy_type" in order.orders[0]
     assert "buy_quantity" in order.orders[0]
     assert order.orders[0]["status"] == "success"
+
+
+@responses.activate
+def test_mints_endpoint_integration():
+    responses.add(
+        responses.GET,
+        "https://api.x.immutable.com/v1/mints",
+        json={
+            "result": [
+                {
+                    "transaction_id": 12190538,
+                    "status": "success",
+                    "user": "xyz",
+                    "token": {
+                        "type": "ERC721",
+                        "data": {
+                            "token_id": "73583",
+                            "id": "123",
+                            "token_address": "abcd",
+                            "quantity": "1",
+                            "quantity_with_fees": "",
+                        },
+                    },
+                    "timestamp": "2023-08-02T21:20:46.352943Z",
+                }
+            ],
+            "remaining": 0,
+            "cursor": None,
+        },
+        status=200,
+    )
+
+    parameters = {
+        "token_address": "0xacb3c6a43d15b907e8433077b6d38ae40936fe2c",
+        "min_timestamp": "2023-07-18T00:00:00.00Z",
+        "max_timestamp": "2023-07-18T00:30:59.99Z",
+    }
+
+    mint = Mint(parameters=parameters)
+    assert isinstance(mint.mints[0], dict)
+    assert "timestamp" in mint.mints[0]
+    assert "status" in mint.mints[0]
+    assert "user" in mint.mints[0]
+    assert "token_id" in mint.mints[0]
+    assert mint.mints[0]["status"] == "success"
