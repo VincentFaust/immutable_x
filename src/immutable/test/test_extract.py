@@ -104,7 +104,7 @@ def test_mints_endpoint_integration():
 
 
 @responses.activate
-def test_orders_endpoint_integration():
+def test_transfers_endpoint_integration():
     responses.add(
         responses.GET,
         "https://api.x.immutable.com/v1/transfers",
