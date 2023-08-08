@@ -1,6 +1,7 @@
 import responses
 from immutable.extract.orders import Order
 from immutable.extract.mints import Mint
+from immutable.extract.transfers import Transfer
 
 
 @responses.activate
@@ -100,3 +101,49 @@ def test_mints_endpoint_integration():
     assert "user" in mint.mints[0]
     assert "token_id" in mint.mints[0]
     assert mint.mints[0]["status"] == "success"
+
+
+@responses.activate
+def test_orders_endpoint_integration():
+    responses.add(
+        responses.GET,
+        "https://api.x.immutable.com/v1/transfers",
+        json={
+            "result": [
+                {
+                    "transaction_id": 12267122,
+                    "status": "success",
+                    "user": "efg",
+                    "token": {
+                        "type": "ETH",
+                        "data": {
+                            "token_id": "73583",
+                            "id": "123",
+                            "token_address": "0xb3dfd3dfb829b394f2467f4396f39ece7818d876",
+                            "decimals": 18,
+                            "quantity": "1053000000000000",
+                            "quantity_with_fees": "",
+                        },
+                    },
+                    "timestamp": "2023-08-02T21:20:46.352943Z",
+                }
+            ],
+            "remaining": 0,
+            "cursor": None,
+        },
+        status=200,
+    )
+
+    parameters = {
+        "token_address": "0xacb3c6a43d15b907e8433077b6d38ae40936fe2c",
+        "min_timestamp": "2023-07-18T00:00:00.00Z",
+        "max_timestamp": "2023-07-18T00:30:59.99Z",
+        "status": "success",
+    }
+
+    transfer = Transfer(parameters=parameters)
+    assert isinstance(transfer.transfers[0], dict)
+    assert "timestamp" in transfer.transfers[0]
+    assert "user" in transfer.transfers[0]
+    assert "token_id" in transfer.transfers[0]
+    assert "id" in transfer.transfers[0]
