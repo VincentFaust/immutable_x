@@ -1,6 +1,5 @@
 from extract.mints import Mint
 from extract.orders import Order
-from extract.transfers import Transfer
 
 import logging
 import pandas as pd
@@ -13,48 +12,34 @@ def pipeline():
     )
 
     logging.info("orders endpoint extraction start")
-    gods_orders = Order(
+    hro_orders = Order(
         parameters=(
             {
-                "sell_token_address": "0xacb3c6a43d15b907e8433077b6d38ae40936fe2c",
+                "sell_token_address": "0x8cb332602d2f614b570c7631202e5bf4bb93f3f6",
                 "min_timestamp": "2023-07-18T00:00:00.00Z",
-                "max_timestamp": "2023-07-18T00:30:59.99Z",
+                "max_timestamp": "2023-07-30T00:30:59.99Z",
+                "status": "filled",
             }
         ),
     )
     logging.info("orders endpoint extraction complete")
 
     logging.info("mints endpoint extraction start")
-    gods_mints = Mint(
+    hro_mints = Mint(
         parameters=(
             {
-                "token_address": "0xacb3c6a43d15b907e8433077b6d38ae40936fe2c",
+                "token_address": "0x8cb332602d2f614b570c7631202e5bf4bb93f3f6",
                 "min_timestamp": "2023-07-18T00:00:00.00Z",
-                "max_timestamp": "2023-07-18T00:30:59.99Z",
+                "max_timestamp": "2023-07-30T00:30:59.99Z",
                 "status": "success",
             }
         ),
     )
     logging.info("mints endpoint extraction complete")
 
-    logging.info("transfers endpoint extraction start")
-    gods_transfers = Transfer(
-        parameters=(
-            {
-                "token_address": "0xacb3c6a43d15b907e8433077b6d38ae40936fe2c",
-                "min_timestamp": "2023-07-18T00:00:00.00Z",
-                "max_timestamp": "2023-07-18T00:30:59.99Z",
-                "status": "success",
-            }
-        ),
-    )
-
-    logging.info("transfers endpoint extraction complete")
-
     logging.info("converting lists to pandas dataframe start")
-    orders_df = pd.DataFrame(gods_orders.orders)
-    mints_df = pd.DataFrame(gods_mints.mints)
-    transfers_df = pd.DataFrame(gods_transfers.transfers)
+    orders_df = pd.DataFrame(hro_orders.orders)
+    mints_df = pd.DataFrame(hro_mints.mints)
 
     logging.info("converting lists to pandas dataframe end")
 
@@ -64,7 +49,6 @@ def pipeline():
 
     orders_df.to_csv(f"{output_directory}/orders.csv", index=False)
     mints_df.to_csv(f"{output_directory}/mints.csv", index=False)
-    transfers_df.to_csv(f"{output_directory}/transfers.csv", index=False)
 
     logging.info("creating csv end")
 
