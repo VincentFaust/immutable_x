@@ -10,6 +10,7 @@ class Deposit(Crypto):
 
     def json_elements(self, data: Dict):
         for element in data["result"]:
+            timestamp = element["timestamp"].split("T")[0]
             transaction_id = element["transaction_id"]
             user_id = element["user"]
             status = element["status"]
@@ -19,6 +20,7 @@ class Deposit(Crypto):
             )
 
             depositer = {
+                "timestamp": timestamp,
                 "transaction_id": transaction_id,
                 "user_id": user_id,
                 "status": status,

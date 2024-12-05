@@ -1,8 +1,12 @@
 from typing import Dict, Any
 import requests
+from ratelimit import limits, sleep_and_retry
+
+ONE_SECOND = 1
 
 
 class Crypto:
+
     def __init__(self, params: Dict) -> None:
         self.params = params
         self.base_url = (
@@ -20,6 +24,8 @@ class Crypto:
             else:
                 break
 
+    @sleep_and_retry
+    @limits(calls=5, period=ONE_SECOND)
     def get_main_session(self) -> Dict[str, Any]:
         session = requests.get(
             f"{self.base_url}{self.endpoint}?cursor={self.cursor}", params=self.params
