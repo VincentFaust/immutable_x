@@ -1,5 +1,5 @@
-from extract.mints import Mint
 from extract.orders import Order
+from extract.deposits import Deposit
 
 import logging
 import pandas as pd
@@ -11,35 +11,33 @@ def pipeline():
         format="[%(levelname)s][%(asctime)s][%(filename)s]: %(message)s",
     )
 
+    logging.info("deposits endpoint extraction start")
+
+    gods_cards_deposits = Deposit(
+        parameters={
+            "min_timestamp": "2024-11-01T00:00:00.00Z",
+            "max_timestamp": "2024-11-20T23:59:59.99Z",
+        }
+    )
+
+    logging.info("deposits endpoint extraction end")
+
     logging.info("orders endpoint extraction start")
-    hro_orders = Order(
+    gods_cards_orders = Order(
         parameters=(
             {
-                "sell_token_address": "0x8cb332602d2f614b570c7631202e5bf4bb93f3f6",
-                "min_timestamp": "2023-07-18T00:00:00.00Z",
-                "max_timestamp": "2023-07-30T00:30:59.99Z",
+                "sell_token_address": "0xacb3c6a43d15b907e8433077b6d38ae40936fe2c",
+                "min_timestamp": "2024-11-01T00:00:00.00Z",
+                "max_timestamp": "2024-11-20T00:59:59.99Z",
                 "status": "filled",
             }
         ),
     )
     logging.info("orders endpoint extraction complete")
 
-    logging.info("mints endpoint extraction start")
-    hro_mints = Mint(
-        parameters=(
-            {
-                "token_address": "0x8cb332602d2f614b570c7631202e5bf4bb93f3f6",
-                "min_timestamp": "2023-07-18T00:00:00.00Z",
-                "max_timestamp": "2023-07-30T00:30:59.99Z",
-                "status": "success",
-            }
-        ),
-    )
-    logging.info("mints endpoint extraction complete")
-
     logging.info("converting lists to pandas dataframe start")
-    orders_df = pd.DataFrame(hro_orders.orders)
-    mints_df = pd.DataFrame(hro_mints.mints)
+    deposits_df = pd.DataFrame(gods_cards_deposits.deposits)
+    orders_df = pd.DataFrame(gods_cards_orders.orders)
 
     logging.info("converting lists to pandas dataframe end")
 
@@ -47,8 +45,8 @@ def pipeline():
 
     logging.info("creating csv start")
 
+    deposits_df.to_csv(f"{output_directory}/deposits.csv", index=False)
     orders_df.to_csv(f"{output_directory}/orders.csv", index=False)
-    mints_df.to_csv(f"{output_directory}/mints.csv", index=False)
 
     logging.info("creating csv end")
 
