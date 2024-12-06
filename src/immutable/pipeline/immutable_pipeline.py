@@ -26,7 +26,7 @@ def pipeline():
     all_deposits = Deposit(
         parameters={
             "min_timestamp": "2024-11-01T00:00:00.00Z",
-            "max_timestamp": "2024-11-07T23:59:59.99Z",
+            "max_timestamp": "2024-11-30T23:59:59.99Z",
             "direction": "asc",
         }
     )
@@ -39,7 +39,7 @@ def pipeline():
             {
                 "sell_token_address": "0xacb3c6a43d15b907e8433077b6d38ae40936fe2c",
                 "min_timestamp": "2024-11-01T00:00:00.00Z",
-                "max_timestamp": "2024-11-07T00:59:59.99Z",
+                "max_timestamp": "2024-11-30T00:59:59.99Z",
                 "status": "filled",
                 "direction": "asc",
             }
