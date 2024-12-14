@@ -1,0 +1,6 @@
+{
+    "r.rterm.mac": "/Users/fitz/opt/anaconda3/envs/immutable/bin/R",
+    "r.lsp.path": "/Users/fitz/opt/anaconda3/envs/immutable/bin/R",
+    "r.alwaysUseActiveTerminal": true,
+    "editor.formatOnSave": true
+}
