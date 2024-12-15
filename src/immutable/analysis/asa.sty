@@ -1,0 +1,36 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{asa}[2024/12/14 ASA journal style]
+
+\RequirePackage{amsmath, amssymb, graphicx, float, booktabs}
+\RequirePackage{hyperref}
+
+\RequirePackage[letterpaper, margin=1in]{geometry}
+
+\renewcommand{\maketitle}{
+    \begin{center}
+        \Large\bfseries \@title \par
+        \vspace{1em}
+        \normalsize
+    \end{center}
+}
+
+\renewcommand{\section}{\@startsection{section}{1}{0pt}{1.5em}{0.5em}{\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0pt}{1.25em}{0.25em}{\normalfont\normalsize\bfseries}}
+
+\newenvironment{abstract}{
+    \begin{center}
+        \bfseries Abstract
+    \end{center}
+    \vspace{-1em}
+    \quotation
+}{\endquotation}
+
+\RequirePackage[numbers]{natbib}
+\setlength{\bibsep}{0pt} 
+
+\RequirePackage[font=small, labelfont=bf]{caption}
+\captionsetup[table]{position=above} 
+
+\newcommand{\keywords}[1]{\textbf{Keywords:} #1}
+
+\endinput

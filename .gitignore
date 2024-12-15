@@ -5,6 +5,8 @@
 
 # C extensions
 *.so
+*.aux
+*.out
 
 # Distribution / packaging
 .Python
