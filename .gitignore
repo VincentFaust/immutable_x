@@ -9,7 +9,7 @@
 *.out
 *.tex
 asa.sty
-
+.Rprofile
 
 # Distribution / packaging
 .Python
